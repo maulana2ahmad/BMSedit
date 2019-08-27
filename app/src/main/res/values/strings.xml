@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BMS2</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
+    <string name="login">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connection_down">Wifi and Mobile Data area supported</string>
+    <string name="try_againt">Try Againt</string>
+</resources>
