@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bms2.model.AccessTokenLdap;
+import com.example.bms2.model.Login;
 import com.example.bms2.services.ApiRetrofit;
 import com.example.bms2.services.ClientLdap;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -84,24 +89,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         */
 
-
         //call class interface and class Apiretrofit
-        ClientLdap clientLdap = ApiRetrofit.getServices();
-        Call<ResponseBody> call = clientLdap.getToken(token);
+        Call<Login> call = ApiRetrofit
+                .getInstance()
+                .getApiClien()
+                .userLogin(username, password);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<Login>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Login> call, Response<Login> response) {
 
-                if (response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
-
+                if(response.isSuccessful())
+                {
+                    String token = response.body().toString();
+                    Log.e("TOKEN", token);
+                    Toast.makeText(LoginActivity.this, response.body().getGagal(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                }
+                else {
+
+                    Toast.makeText(LoginActivity.this, response.body().getGagal(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Login> call, Throwable t) {
 
             }
         });

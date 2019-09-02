@@ -7,24 +7,38 @@ public class ApiRetrofit {
 
     //private static Retrofit retrofit = null;
 
-    private String token;
-
-    private static Retrofit retrofit = null;
-    private static String BASE_URL = "http://portal-bams.mncgroup.com:8008/";
+    private String BASE_URL = "http://portal-bams.mncgroup.com:8008/";
 
     private static  ApiRetrofit mIntence;
 
-    public static ClientLdap getServices()
-    {
-        if (retrofit == null)
-        {
-            retrofit = new Retrofit
-                    .Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+    private Retrofit retrofit;
 
+    public ApiRetrofit()
+    {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    public void ApiRetrofit2(String token)
+    {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL + token)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    public static synchronized ApiRetrofit getInstance()
+    {
+        if (mIntence == null)
+        {
+            mIntence = new ApiRetrofit();
+        }
+        return mIntence;
+    }
+
+    public ClientLdap getApiClien(){
         return retrofit.create(ClientLdap.class);
     }
 

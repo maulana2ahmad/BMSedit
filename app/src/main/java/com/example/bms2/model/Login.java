@@ -2,11 +2,17 @@ package com.example.bms2.model;
 
 public class Login {
 
-    private String username;
-    private String password;
+    public String getGagal() {
+        return gagal;
+    }
 
-    public Login(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public void setGagal(String gagal) {
+        this.gagal = gagal;
+    }
+
+    private String gagal;
+
+    public Login(String gagal) {
+        this.gagal = gagal;
     }
 }

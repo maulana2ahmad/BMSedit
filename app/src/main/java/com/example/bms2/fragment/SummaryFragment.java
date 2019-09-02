@@ -1,5 +1,6 @@
 package com.example.bms2.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,7 @@ import com.example.bms2.R;
  */
 public class SummaryFragment extends Fragment {
 
-    private ProgressBar mprogressBar;
+    private ProgressDialog mProgressDialog;
     private WebView wbSummry;
     private SwipeRefreshLayout mswipeRefreshLayout;
     private String token;
@@ -77,6 +78,7 @@ public class SummaryFragment extends Fragment {
         wbSummry.getSettings().setAppCacheEnabled(true);
         wbSummry.getSettings().setSupportZoom(true);
         wbSummry.getSettings().setSupportMultipleWindows(true);
+        mProgressDialog = ProgressDialog.show(getActivity(), "Loading", "Please wait for a moment...", true);
         wbSummry.loadUrl(pageUrl+token);
         //wbSummry.addJavascriptInterface(new SimpleWebJavascriptInterface(getActivity()), "Android");
         mswipeRefreshLayout.setRefreshing(true);
@@ -93,6 +95,10 @@ public class SummaryFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                if(mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
 
                 mswipeRefreshLayout.setRefreshing(false);
             }

@@ -15,7 +15,8 @@ public interface ClientLdap {
 
     @FormUrlEncoded
     @POST("api")
-    Call<Login> login(@Body Login login);
+    Call<Login> userLogin(@Field("username") String username,
+                          @Field("password") String password);
 
     @POST("token")
     @FormUrlEncoded
